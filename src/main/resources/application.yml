@@ -1,0 +1,15 @@
+server:
+  port: 9521
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/addressbook
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    sql-script-encoding: utf-8
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: lxw.addressbook.addressbook.mapper
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
