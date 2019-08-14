@@ -9,6 +9,7 @@ import lxw.addressbook.addressbook.mapper.UserMapper;
 import lxw.addressbook.addressbook.model.request.GetOpenIdRequest;
 import lxw.addressbook.addressbook.model.request.SelectUserByOPenIdRequest;
 import lxw.addressbook.addressbook.util.HttpUtil;
+import lxw.addressbook.addressbook.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +28,16 @@ public class UserService {
 
     @Autowired private SieveMapper sieveMapper;
 
+    @Autowired private RedisUtils redisUtils;
+
     public int addUser(User user) {
         int i =userMapper.insert(user);
+        redisUtils.set(user.getOpenId(),JSONObject.toJSONString(user));
         Sieve sieve = new Sieve();
         sieve.setUserId(user.getId());
         sieve.setJetton("5000");
         sieveMapper.insertSelective(sieve);
+
        return i;
     }
 
@@ -47,7 +52,13 @@ public class UserService {
         return openId;
     }
 
-    public List<User> getUserByOpenId(SelectUserByOPenIdRequest selectUserByOPenIdRequest) {
-        return userMapper.SelectUserByOPenIdRequest(selectUserByOPenIdRequest.getOpenId());
+    public User getUserByOpenId(SelectUserByOPenIdRequest selectUserByOPenIdRequest) {
+        String userString = redisUtils.get(selectUserByOPenIdRequest.getOpenId());
+        if(userString!=null&&userString.length()>0){
+            return  JSONObject.parseObject(userString, User.class);
+        }else{
+            List<User> users = userMapper.SelectUserByOPenIdRequest(selectUserByOPenIdRequest.getOpenId());
+            return users!=null&&users.size()==1?users.get(0):null;
+        }
     }
 }

@@ -37,8 +37,8 @@ public class UserController {
     }
     @PostMapping(value = "checkRegister")
     public RestfulResponse checkRegister(@RequestBody SelectUserByOPenIdRequest selectUserByOPenIdRequest){
-        List<User> user = userService.getUserByOpenId(selectUserByOPenIdRequest);
-        if(user!=null &&user.size()==1){
+        User user = userService.getUserByOpenId(selectUserByOPenIdRequest);
+        if(user!=null){
             return RestfulResponse.getRestfulResponse(StatusCode.USER_IS_REGISTERED);
         }else{
             return RestfulResponse.getRestfulResponse(StatusCode.USER_NOT_REGISTERED);
