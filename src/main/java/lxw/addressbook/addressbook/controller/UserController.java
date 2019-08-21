@@ -6,12 +6,9 @@ import lxw.addressbook.addressbook.common.StatusCode;
 import lxw.addressbook.addressbook.domain.User;
 import lxw.addressbook.addressbook.model.request.GetOpenIdRequest;
 import lxw.addressbook.addressbook.model.request.SelectUserByOPenIdRequest;
-import lxw.addressbook.addressbook.service.OrganService;
-import lxw.addressbook.addressbook.service.SieveService;
 import lxw.addressbook.addressbook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @Slf4j
 @RestController
