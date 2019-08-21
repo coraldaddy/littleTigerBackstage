@@ -90,6 +90,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+
+        <!-- 引入wechat-api -->
+        <dependency>
+            <groupId>io.github.biezhi</groupId>
+            <artifactId>wechat-api</artifactId>
+            <version>1.0.6</version>
+        </dependency>
     </dependencies>
 
     <build>

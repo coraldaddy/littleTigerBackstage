@@ -10,6 +10,12 @@ import lxw.addressbook.addressbook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
+/**
+ * 功能描述:用户相关的Controller
+ * @auther: lxw
+ * @date: 2019/8/14 19:27
+ */
 @Slf4j
 @RestController
 @RequestMapping(value = "user")
@@ -23,7 +29,11 @@ public class UserController {
         return null;
     }
 
-    //换取openId
+    /**
+     * 功能描述: 通过code换取openId
+     * @auther: lxw
+     * @date: 2019/8/14 09:26
+     */
     @PostMapping(value = "getOpenIdByCode")
     public RestfulResponse getOpenIdByCode(@RequestBody GetOpenIdRequest getOpenIdRequest){
         String openId = userService.getOpenIdByCode(getOpenIdRequest);
@@ -32,6 +42,11 @@ public class UserController {
         }
         return RestfulResponse.getRestfulResponse(StatusCode.ACQUIRE_SUCCESS,openId);
     }
+    /**
+     * 功能描述:通过openId检查是否注册为用户
+     * @auther: lxw
+     * @date: 2019/8/14 09:27
+     */
     @PostMapping(value = "checkRegister")
     public RestfulResponse checkRegister(@RequestBody SelectUserByOPenIdRequest selectUserByOPenIdRequest){
         User user = userService.getUserByOpenId(selectUserByOPenIdRequest);
@@ -41,6 +56,12 @@ public class UserController {
             return RestfulResponse.getRestfulResponse(StatusCode.USER_NOT_REGISTERED);
         }
     }
+
+    /**
+     * 功能描述: 添加用户信息
+     * @auther: lxw
+     * @date: 2019/8/21 19:46
+     */
     @PostMapping(value = "addUser")
     public RestfulResponse addUser(@RequestBody User user){
         int i =userService.addUser(user);
